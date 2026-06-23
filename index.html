@@ -493,6 +493,72 @@
             display: none !important;
         }
         
+        /* Loading 动画 */
+        .loading-container {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #f0f0f0;
+            border-top: 4px solid #FF6B6B;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 30px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-container h3 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+        
+        .loading-container > p {
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+        
+        .loading-steps {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        
+        .loading-step {
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-radius: 8px;
+            background: #f8f9fa;
+            color: #999;
+            font-size: 14px;
+            transition: all 0.5s ease;
+            opacity: 0.5;
+        }
+        
+        .loading-step.active {
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            color: white;
+            opacity: 1;
+            transform: translateX(10px);
+        }
+        
+        .loading-step.done {
+            color: #4CAF50;
+            opacity: 1;
+        }
+        
+        .loading-step.done::after {
+            content: ' ✓';
+        }
+        
         .avatar-svg {
             width: 120px;
             height: 120px;
@@ -508,7 +574,7 @@
         <div id="landing" class="hero">
             <div class="floating-avatars" id="floating-avatars"></div>
             <h1>副业人格测试</h1>
-            <p>3分钟测出你是什么搞钱类型<br>12道题，4个维度，16种副业人格</p>
+            <p>3分钟测出你是什么搞钱类型<br>16道题，4个维度，16种副业人格</p>
             <button class="btn" onclick="startQuiz()">开始测试</button>
         </div>
         
@@ -517,7 +583,7 @@
             <div class="progress-bar">
                 <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
             </div>
-            <div class="progress-text" id="progress-text">第 1 / 12 题</div>
+            <div class="progress-text" id="progress-text">第 1 / 16 题</div>
             
             <!-- 问题1：维度1 - 创造者vs解题者 -->
             <div class="question-card active" data-q="1" data-dim="creator">
@@ -559,29 +625,30 @@
                 </div>
             </div>
             
-            <!-- 问题4-6：维度2 - Hunter vs Farmer -->
-            <div class="question-card" data-q="4" data-dim="hunter">
-                <span class="dimension-tag">维度2/4：你的流量从哪来？</span>
-                <h3>4. 你更愿意在哪里展示自己？</h3>
+            <!-- 问题4：维度1 场景题 -->
+            <div class="question-card" data-q="4" data-dim="creator">
+                <span class="dimension-tag">维度1/4：你靠什么赚钱？</span>
+                <h3>4. 朋友拉你合伙开咖啡店，你第一反应是？</h3>
                 <div class="options">
                     <label class="option" onclick="selectOption(this, 4, 'A')">
-                        <input type="radio" name="q4" value="A"> 抖音、小红书、B站等公域平台
+                        <input type="radio" name="q4" value="A"> 我来设计logo、装修、做社交媒体宣传
                     </label>
                     <label class="option" onclick="selectOption(this, 4, 'B')">
-                        <input type="radio" name="q4" value="B"> 微信、社群、朋友圈等私域
+                        <input type="radio" name="q4" value="B"> 我来算成本、找供应商、做运营计划
                     </label>
                 </div>
             </div>
             
+            <!-- 问题5-8：维度2 - Hunter vs Farmer -->
             <div class="question-card" data-q="5" data-dim="hunter">
                 <span class="dimension-tag">维度2/4：你的流量从哪来？</span>
-                <h3>5. 你觉得哪种方式更稳妥？</h3>
+                <h3>5. 你更愿意在哪里展示自己？</h3>
                 <div class="options">
                     <label class="option" onclick="selectOption(this, 5, 'A')">
-                        <input type="radio" name="q5" value="A"> 在平台积累粉丝，靠流量变现
+                        <input type="radio" name="q5" value="A"> 抖音、小红书、B站等公域平台
                     </label>
                     <label class="option" onclick="selectOption(this, 5, 'B')">
-                        <input type="radio" name="q5" value="B"> 积累自己的客户名单，反复触达
+                        <input type="radio" name="q5" value="B"> 微信、社群、朋友圈等私域
                     </label>
                 </div>
             </div>
@@ -599,82 +666,138 @@
                 </div>
             </div>
             
-            <!-- 问题7-9：维度3 - Solo vs Squad -->
-            <div class="question-card" data-q="7" data-dim="solo">
-                <span class="dimension-tag">维度3/4：你一个人还是一群人？</span>
-                <h3>7. 接到一个任务，你更倾向于？</h3>
+            <!-- 问题7：维度2 场景题 -->
+            <div class="question-card" data-q="7" data-dim="hunter">
+                <span class="dimension-tag">维度2/4：你的流量从哪来？</span>
+                <h3>7. 你刚发了一篇内容，哪种反馈让你更兴奋？</h3>
                 <div class="options">
                     <label class="option" onclick="selectOption(this, 7, 'A')">
-                        <input type="radio" name="q7" value="A"> 自己一个人搞定
+                        <input type="radio" name="q7" value="A"> 平台通知：有10万人看到了你的内容
                     </label>
                     <label class="option" onclick="selectOption(this, 7, 'B')">
-                        <input type="radio" name="q7" value="B"> 找人分工合作
+                        <input type="radio" name="q7" value="B"> 微信弹出：3个老客户又推荐了新朋友
                     </label>
                 </div>
             </div>
             
+            <!-- 问题8-11：维度3 - Solo vs Squad -->
             <div class="question-card" data-q="8" data-dim="solo">
                 <span class="dimension-tag">维度3/4：你一个人还是一群人？</span>
-                <h3>8. 你更喜欢哪种工作状态？</h3>
+                <h3>8. 接到一个任务，你更倾向于？</h3>
                 <div class="options">
                     <label class="option" onclick="selectOption(this, 8, 'A')">
-                        <input type="radio" name="q8" value="A"> 安静独处，专注做事
+                        <input type="radio" name="q8" value="A"> 自己一个人搞定
                     </label>
                     <label class="option" onclick="selectOption(this, 8, 'B')">
-                        <input type="radio" name="q8" value="B"> 多方沟通，协调推进
+                        <input type="radio" name="q8" value="B"> 找人分工合作
                     </label>
                 </div>
             </div>
             
             <div class="question-card" data-q="9" data-dim="solo">
                 <span class="dimension-tag">维度3/4：你一个人还是一群人？</span>
-                <h3>9. 遇到困难，你的第一反应是？</h3>
+                <h3>9. 你更喜欢哪种工作状态？</h3>
                 <div class="options">
                     <label class="option" onclick="selectOption(this, 9, 'A')">
-                        <input type="radio" name="q9" value="A"> 自己查资料、想办法解决
+                        <input type="radio" name="q9" value="A"> 安静独处，专注做事
                     </label>
                     <label class="option" onclick="selectOption(this, 9, 'B')">
-                        <input type="radio" name="q9" value="B"> 找人请教、寻求合作
+                        <input type="radio" name="q9" value="B"> 多方沟通，协调推进
                     </label>
                 </div>
             </div>
             
-            <!-- 问题10-12：维度4 - Sprinter vs Grinder -->
-            <div class="question-card" data-q="10" data-dim="sprinter">
-                <span class="dimension-tag">维度4/4：你要快钱还是慢钱？</span>
-                <h3>10. 你做副业的主要目的是？</h3>
+            <div class="question-card" data-q="10" data-dim="solo">
+                <span class="dimension-tag">维度3/4：你一个人还是一群人？</span>
+                <h3>10. 遇到困难，你的第一反应是？</h3>
                 <div class="options">
                     <label class="option" onclick="selectOption(this, 10, 'A')">
-                        <input type="radio" name="q10" value="A"> 尽快赚到钱
+                        <input type="radio" name="q10" value="A"> 自己查资料、想办法解决
                     </label>
                     <label class="option" onclick="selectOption(this, 10, 'B')">
-                        <input type="radio" name="q10" value="B"> 建立一个长期可持续的事业
+                        <input type="radio" name="q10" value="B"> 找人请教、寻求合作
                     </label>
                 </div>
             </div>
             
-            <div class="question-card" data-q="11" data-dim="sprinter">
-                <span class="dimension-tag">维度4/4：你要快钱还是慢钱？</span>
-                <h3>11. 你更能接受哪种状态？</h3>
+            <!-- 问题11：维度3 场景题 -->
+            <div class="question-card" data-q="11" data-dim="solo">
+                <span class="dimension-tag">维度3/4：你一个人还是一群人？</span>
+                <h3>11. 周末有个赚钱机会，但需要2个人配合，你会？</h3>
                 <div class="options">
                     <label class="option" onclick="selectOption(this, 11, 'A')">
-                        <input type="radio" name="q11" value="A"> 做了就能看到钱，但可能不稳定
+                        <input type="radio" name="q11" value="A"> 算了，自己干不了就不干，宁可少赚点
                     </label>
                     <label class="option" onclick="selectOption(this, 11, 'B')">
-                        <input type="radio" name="q11" value="B"> 前期不赚钱，但越做越轻松
+                        <input type="radio" name="q11" value="B"> 马上发朋友圈/群聊，找人一起干，分成就行
                     </label>
                 </div>
             </div>
             
+            <!-- 问题12-15：维度4 - Sprinter vs Grinder -->
             <div class="question-card" data-q="12" data-dim="sprinter">
                 <span class="dimension-tag">维度4/4：你要快钱还是慢钱？</span>
-                <h3>12. 你计划用多久验证一个副业？</h3>
+                <h3>12. 你做副业的主要目的是？</h3>
                 <div class="options">
                     <label class="option" onclick="selectOption(this, 12, 'A')">
-                        <input type="radio" name="q12" value="A"> 1个月，不行就换
+                        <input type="radio" name="q12" value="A"> 尽快赚到钱
                     </label>
                     <label class="option" onclick="selectOption(this, 12, 'B')">
-                        <input type="radio" name="q12" value="B"> 至少3个月，给足时间
+                        <input type="radio" name="q12" value="B"> 建立一个长期可持续的事业
+                    </label>
+                </div>
+            </div>
+            
+            <div class="question-card" data-q="13" data-dim="sprinter">
+                <span class="dimension-tag">维度4/4：你要快钱还是慢钱？</span>
+                <h3>13. 你更能接受哪种状态？</h3>
+                <div class="options">
+                    <label class="option" onclick="selectOption(this, 13, 'A')">
+                        <input type="radio" name="q13" value="A"> 做了就能看到钱，但可能不稳定
+                    </label>
+                    <label class="option" onclick="selectOption(this, 13, 'B')">
+                        <input type="radio" name="q13" value="B"> 前期不赚钱，但越做越轻松
+                    </label>
+                </div>
+            </div>
+            
+            <div class="question-card" data-q="14" data-dim="sprinter">
+                <span class="dimension-tag">维度4/4：你要快钱还是慢钱？</span>
+                <h3>14. 你计划用多久验证一个副业？</h3>
+                <div class="options">
+                    <label class="option" onclick="selectOption(this, 14, 'A')">
+                        <input type="radio" name="q14" value="A"> 1个月，不行就换
+                    </label>
+                    <label class="option" onclick="selectOption(this, 14, 'B')">
+                        <input type="radio" name="q14" value="B"> 至少3个月，给足时间
+                    </label>
+                </div>
+            </div>
+            
+            <!-- 问题15：维度4 场景题 -->
+            <div class="question-card" data-q="15" data-dim="sprinter">
+                <span class="dimension-tag">维度4/4：你要快钱还是慢钱？</span>
+                <h3>15. 有人告诉你一个"稳赚"的项目，但前3个月看不到钱，你会？</h3>
+                <div class="options">
+                    <label class="option" onclick="selectOption(this, 15, 'A')">
+                        <input type="radio" name="q15" value="A"> 算了，我要的是这个月就能看到钱
+                    </label>
+                    <label class="option" onclick="selectOption(this, 15, 'B')">
+                        <input type="radio" name="q15" value="B"> 如果逻辑靠谱，我可以等3个月再看
+                    </label>
+                </div>
+            </div>
+            
+            <!-- 问题16：额外场景题 -->
+            <div class="question-card" data-q="16" data-dim="sprinter">
+                <span class="dimension-tag">维度4/4：你要快钱还是慢钱？</span>
+                <h3>16. 你做了一个月副业赚了500块，但感觉有长期潜力，你会？</h3>
+                <div class="options">
+                    <label class="option" onclick="selectOption(this, 16, 'A')">
+                        <input type="radio" name="q16" value="A"> 太慢了，换别的试试，找个更快的
+                    </label>
+                    <label class="option" onclick="selectOption(this, 16, 'B')">
+                        <input type="radio" name="q16" value="B"> 500块说明能跑通，再优化3个月看看能到多少
                     </label>
                 </div>
             </div>
@@ -682,6 +805,22 @@
             <div class="nav-buttons">
                 <button class="nav-btn secondary" id="prev-btn" onclick="prevQuestion()" disabled>上一题</button>
                 <button class="nav-btn primary" id="next-btn" onclick="nextQuestion()" disabled>下一题</button>
+            </div>
+        </div>
+        
+        <!-- 加载分析中 -->
+        <div id="loading-section" class="hidden">
+            <div class="loading-container">
+                <div class="loading-spinner"></div>
+                <h3>正在分析你的副业人格...</h3>
+                <p>基于4维度16题模型，精确定位你的搞钱类型</p>
+                <div class="loading-steps">
+                    <div class="loading-step" id="step1">分析创造者/解题者维度...</div>
+                    <div class="loading-step" id="step2">分析猎人/农夫维度...</div>
+                    <div class="loading-step" id="step3">分析独狼/组队维度...</div>
+                    <div class="loading-step" id="step4">分析短跑/肝帝维度...</div>
+                    <div class="loading-step" id="step5">生成专属副业方案...</div>
+                </div>
             </div>
         </div>
         
@@ -741,8 +880,9 @@
     
     <script>
         let currentQ = 1;
-        let totalQ = 12;
+        let totalQ = 16;
         let answers = {};
+        let isAnalyzing = false;
         
         function startQuiz() {
             document.getElementById('landing').classList.add('hidden');
@@ -790,64 +930,82 @@
         }
         
         function showResult() {
+            // 显示loading
             document.getElementById('quiz-section').classList.add('hidden');
-            document.getElementById('result-section').classList.add('active');
+            document.getElementById('loading-section').classList.remove('hidden');
             
-            // 计算4个维度
-            let creator = 0, solver = 0;
-            let hunter = 0, farmer = 0;
-            let solo = 0, squad = 0;
-            let sprinter = 0, grinder = 0;
+            // 步骤动画
+            var steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
+            var stepIndex = 0;
+            var stepInterval = setInterval(function() {
+                if (stepIndex > 0) {
+                    document.getElementById(steps[stepIndex-1]).classList.add('done');
+                    document.getElementById(steps[stepIndex-1]).classList.remove('active');
+                }
+                if (stepIndex < steps.length) {
+                    document.getElementById(steps[stepIndex]).classList.add('active');
+                    stepIndex++;
+                } else {
+                    clearInterval(stepInterval);
+                }
+            }, 400);
             
-            // 维度1：创造者vs解题者（问题1-3）
-            for (let i = 1; i <= 3; i++) {
-                if (answers['q' + i] === 'A') creator++;
-                else if (answers['q' + i] === 'B') solver++;
-            }
-            
-            // 维度2：猎人vs农夫（问题4-6）
-            for (let i = 4; i <= 6; i++) {
-                if (answers['q' + i] === 'A') hunter++;
-                else if (answers['q' + i] === 'B') farmer++;
-            }
-            
-            // 维度3：独狼vs组队（问题7-9）
-            for (let i = 7; i <= 9; i++) {
-                if (answers['q' + i] === 'A') solo++;
-                else if (answers['q' + i] === 'B') squad++;
-            }
-            
-            // 维度4：短跑vs肝帝（问题10-12）
-            for (let i = 10; i <= 12; i++) {
-                if (answers['q' + i] === 'A') sprinter++;
-                else if (answers['q' + i] === 'B') grinder++;
-            }
-            
-            // 生成代码
-            let code = '';
-            code += creator >= solver ? 'C' : 'S';
-            code += hunter >= farmer ? 'H' : 'F';
-            code += solo >= squad ? 'S' : 'Sq';
-            code += sprinter >= grinder ? 'S' : 'G';
-            
-            // 根据代码显示结果
-            const result = getPersonalityResult(code);
-            
-            document.getElementById('avatar-container').innerHTML = getAvatarSVG(result.name);
-            
-            document.getElementById('name').innerText = result.name;
-            document.getElementById('english').innerText = result.english;
-            document.getElementById('catchphrase').innerText = '"' + result.catchphrase + '"';
-            document.getElementById('personality-desc').innerHTML = result.desc;
-            document.getElementById('directions').innerHTML = result.directions;
-            document.getElementById('partner').innerHTML = result.partner;
-            document.getElementById('weakness').innerHTML = result.weakness;
-            document.getElementById('action-list').innerHTML = result.actions;
-            document.getElementById('type-label').innerText = result.name;
-            
-            // 生成分享文案
-            var shareText = "我测了我的【副业人格】\n\n我是：" + result.name + "\n口头禅：" + result.catchphrase + "\n\n你的副业人格是什么？来测测 👇\nhttps://foolish2022.github.io/money-type/\n\n#副业人格";
-            document.getElementById('share-text').value = shareText;
+            setTimeout(function() {
+                document.getElementById('loading-section').classList.add('hidden');
+                document.getElementById('result-section').classList.add('active');
+                
+                // 计算4个维度（每维度4题）
+                let creator = 0, solver = 0;
+                let hunter = 0, farmer = 0;
+                let solo = 0, squad = 0;
+                let sprinter = 0, grinder = 0;
+                
+                // 维度1：创造者vs解题者（问题1-4）
+                for (let i = 1; i <= 4; i++) {
+                    if (answers['q' + i] === 'A') creator++;
+                    else if (answers['q' + i] === 'B') solver++;
+                }
+                
+                // 维度2：猎人vs农夫（问题5-8）
+                for (let i = 5; i <= 8; i++) {
+                    if (answers['q' + i] === 'A') hunter++;
+                    else if (answers['q' + i] === 'B') farmer++;
+                }
+                
+                // 维度3：独狼vs组队（问题9-12）
+                for (let i = 9; i <= 12; i++) {
+                    if (answers['q' + i] === 'A') solo++;
+                    else if (answers['q' + i] === 'B') squad++;
+                }
+                
+                // 维度4：短跑vs肝帝（问题13-16）
+                for (let i = 13; i <= 16; i++) {
+                    if (answers['q' + i] === 'A') sprinter++;
+                    else if (answers['q' + i] === 'B') grinder++;
+                }
+                
+                // 生成代码（4题时用严格多数，2:2时默认A）
+                let code = '';
+                code += creator > solver ? 'C' : 'S';
+                code += hunter > farmer ? 'H' : 'F';
+                code += solo > squad ? 'S' : 'Sq';
+                code += sprinter > grinder ? 'S' : 'G';
+                
+                // 根据代码显示结果
+                const result = getPersonalityResult(code);
+                
+                document.getElementById('avatar-container').innerHTML = getAvatarSVG(result.name);
+                document.getElementById('name').innerText = result.name;
+                document.getElementById('english').innerText = result.english;
+                document.getElementById('catchphrase').innerText = '"' + result.catchphrase + '"';
+                document.getElementById('personality-desc').innerHTML = result.desc;
+                document.getElementById('directions').innerHTML = result.directions;
+                document.getElementById('partner').innerHTML = result.partner;
+                document.getElementById('weakness').innerHTML = result.weakness;
+                document.getElementById('action-list').innerHTML = result.actions;
+                document.getElementById('type-label').innerText = result.name;
+                
+            }, 2000); // 2秒loading
         }
         
         function getPersonalityResult(code) {
