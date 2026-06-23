@@ -27,11 +27,80 @@
         /* 首页 */
         .hero {
             text-align: center;
-            padding: 40px 20px;
+            padding: 60px 20px;
             background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
             border-radius: 16px;
             color: white;
             margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .floating-avatars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .floating-avatars .avatar-item {
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            opacity: 0.22;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: auto;
+            cursor: pointer;
+        }
+        
+        .floating-avatars .avatar-item:hover {
+            opacity: 0.95;
+            transform: scale(1.6) !important;
+            z-index: 100;
+        }
+        
+        .floating-avatars .avatar-item svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+        }
+        
+        .avatar-tooltip {
+            position: absolute;
+            bottom: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: white;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-weight: bold;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            pointer-events: none;
+        }
+        
+        .floating-avatars .avatar-item:hover .avatar-tooltip {
+            opacity: 1;
+        }
+        
+        @keyframes float1 { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-18px) rotate(4deg); } }
+        @keyframes float2 { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-22px) rotate(-3deg); } }
+        @keyframes float3 { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-14px) rotate(5deg); } }
+        @keyframes float4 { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(-4deg); } }
+        @keyframes float5 { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-12px) rotate(2deg); } }
+        
+        .hero h1, .hero p, .hero .btn {
+            position: relative;
+            z-index: 1;
         }
         
         .hero h1 {
@@ -437,6 +506,7 @@
     <div class="container">
         <!-- 首页 -->
         <div id="landing" class="hero">
+            <div class="floating-avatars" id="floating-avatars"></div>
             <h1>副业人格测试</h1>
             <p>3分钟测出你是什么搞钱类型<br>12道题，4个维度，16种副业人格</p>
             <button class="btn" onclick="startQuiz()">开始测试</button>
@@ -1182,6 +1252,36 @@
             return svg;
         }
         
+        // 初始化浮动头像
+        function initFloatingAvatars() {
+            var container = document.getElementById('floating-avatars');
+            if (!container) return;
+            
+            var avatarData = [
+                { name: '野生猎人', top: '8%', left: '5%', anim: 'float1', dur: '4.2s', delay: '0s' },
+                { name: '种田工匠', top: '15%', right: '8%', anim: 'float2', dur: '5.1s', delay: '0.5s' },
+                { name: '流量黑客', top: '35%', left: '3%', anim: 'float3', dur: '3.8s', delay: '1s' },
+                { name: '闪电产品人', top: '45%', right: '5%', anim: 'float4', dur: '4.5s', delay: '1.5s' },
+                { name: '事业合伙人', top: '65%', left: '8%', anim: 'float5', dur: '5.3s', delay: '2s' },
+                { name: '接单快手', top: '75%', right: '10%', anim: 'float1', dur: '4.0s', delay: '0.3s' },
+                { name: '资源整合者', top: '20%', left: '20%', anim: 'float2', dur: '5.5s', delay: '0.8s' },
+                { name: '内容领主', top: '55%', right: '15%', anim: 'float3', dur: '4.8s', delay: '1.2s' }
+            ];
+            
+            for (var i = 0; i < avatarData.length; i++) {
+                var item = document.createElement('div');
+                item.className = 'avatar-item';
+                item.style.top = avatarData[i].top;
+                item.style.animation = avatarData[i].anim + ' ' + avatarData[i].dur + ' ease-in-out ' + avatarData[i].delay + ' infinite';
+                
+                if (avatarData[i].left) item.style.left = avatarData[i].left;
+                if (avatarData[i].right) item.style.right = avatarData[i].right;
+                
+                item.innerHTML = getAvatarSVG(avatarData[i].name) + '<div class="avatar-tooltip">' + avatarData[i].name + '</div>';
+                container.appendChild(item);
+            }
+        }
+        
         function shareToFriend() {
             var name = document.getElementById('name').innerText;
             var text = '我测了我的副业人格，是【' + name + '】！' + '\n你的副业人格是什么？来测测 👇\nhttps://foolish2022.github.io/money-type/';
@@ -1229,6 +1329,7 @@
         }
         // 页面加载时检查是否是演示模式
         (function() {
+            initFloatingAvatars();
             var url = new URL(window.location.href);
             if (url.searchParams.get('demo') === '1') {
                 // 随机选择一个人格直接显示
