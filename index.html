@@ -1227,6 +1227,18 @@
                 alert('截图失败，请手动截图保存');
             });
         }
-    </script>
+        // 页面加载时检查是否是演示模式
+        (function() {
+            var url = new URL(window.location.href);
+            if (url.searchParams.get('demo') === '1') {
+                // 随机选择一个人格直接显示
+                var demoNames = ['野生猎人', '种田工匠', '流量黑客', '闪电产品人', '事业合伙人'];
+                var demoName = demoNames[Math.floor(Math.random() * demoNames.length)];
+                var demoResult = results[demoName];
+                if (demoResult) {
+                    showResult(demoResult);
+                }
+            }
+        })();
 </body>
 </html>
