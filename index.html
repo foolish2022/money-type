@@ -606,9 +606,11 @@
             
             <!-- 引流区 -->
             <div class="cta-section">
-                <h3>加入你的副业人格社群</h3>
-                <p>群里都是和你一样的<span id="type-label">XX型</span>，一起交流、互相搭伙</p>
-                <div style="text-align:center;"><img src="qrcode.jpg" alt="微信二维码" style="width:180px;height:180px;border-radius:12px;"></div>
+                <h3>关于我</h3>
+                <p>我是卷sir，搞钱的尽头是认知，记录一个00后的商业思考。</p>
+                <p style="margin-top: 8px; font-size: 13px; opacity: 0.9;">不教成功学 / 不卖焦虑 / 不画大饼</p>
+                <p style="margin-top: 8px; font-size: 13px; opacity: 0.9;">欢迎找我聊聊副业定位、内容起号和商业认知</p>
+                <div style="text-align:center; margin: 16px 0;"><img src="qrcode.jpg" alt="微信二维码" style="width:180px;height:180px;border-radius:12px;"></div>
                 <div class="wechat-id">微信号：juansir2026</div>
                 <p style="margin-top: 12px; font-size: 13px;">添加请备注"副业人格"</p>
             </div>
@@ -722,7 +724,7 @@
             document.getElementById('type-label').innerText = result.name;
             
             // 生成分享文案
-            const shareText = `我测了我的【副业人格】\n\n我是：${result.name}\n口头禅："${result.catchphrase}"\n\n你的副业人格是什么？来测测 👇\n#副业人格`;            document.getElementById('share-text').innerText = shareText;
+            const shareText = `我测了我的【副业人格】\n\n我是：${result.name}\n口头禅："${result.catchphrase}"\n\n你的副业人格是什么？来测测 👇\nhttps://foolish2022.github.io/money-type/\n\n#副业人格`;            document.getElementById('share-text').innerText = shareText;
         }
         
         function getPersonalityResult(code) {
