@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>副业人格测试 - 3分钟测出你是什么搞钱类型</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 首页 */
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            border-radius: 16px;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .hero h1 {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+        
+        .hero p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 24px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 40px;
+            background: white;
+            color: #FF6B6B;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 进度条 */
+        .progress-bar {
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF6B6B, #4ECDC4);
+            transition: width 0.3s;
+        }
+        
+        .progress-text {
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        /* 问题卡片 */
+        .question-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            display: none;
+        }
+        
+        .question-card.active {
+            display: block;
+        }
+        
+        .dimension-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #f0f0f0;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        
+        .question-card h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 16px;
+            border: 2px solid #e8e8e8;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+        }
+        
+        .option:hover {
+            border-color: #FF6B6B;
+            background: #fff5f5;
+        }
+        
+        .option.selected {
+            border-color: #FF6B6B;
+            background: #fff5f5;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        /* 结果页 */
+        .result-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            display: none;
+        }
+        
+        .result-card.active {
+            display: block;
+        }
+        
+        .identity-card {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            border-radius: 16px;
+            color: white;
+            margin-bottom: 24px;
+        }
+        
+        .code-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+        
+        .identity-name {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .identity-english {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 16px;
+        }
+        
+        .catchphrase {
+            font-size: 18px;
+            font-style: italic;
+            opacity: 0.95;
+        }
+        
+        .section {
+            margin-bottom: 24px;
+        }
+        
+        .section h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: #FF6B6B;
+        }
+        
+        .dimension-result {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .dimension-label {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .dimension-value {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .direction-item {
+            padding: 16px;
+            background: #f8f9ff;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid #4ECDC4;
+        }
+        
+        .direction-item h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        
+        .direction-item p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        
+        .action-list {
+            background: #f0f9ff;
+            border-radius: 12px;
+            padding: 16px;
+        }
+        
+        .action-list li {
+            margin-bottom: 8px;
+            margin-left: 20px;
+        }
+        
+        .partner-section {
+            background: #fff8e1;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .weakness-section {
+            background: #fce4ec;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .share-section {
+            background: #e8f5e9;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+            text-align: center;
+        }
+        
+        .share-btn {
+            display: inline-block;
+            padding: 12px 32px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+        
+        .share-text {
+            font-size: 14px;
+            color: #666;
+            margin-top: 12px;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            text-align: left;
+        }
+        
+        /* 引流区 */
+        .cta-section {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 24px;
+        }
+        
+        .cta-section h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: white;
+        }
+        
+        .cta-section p {
+            font-size: 14px;
+            margin-bottom: 16px;
+            opacity: 0.95;
+        }
+        
+        .qr-placeholder {
+            width: 180px;
+            height: 180px;
+            background: white;
+            border-radius: 12px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .wechat-id {
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        /* 导航按钮 */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .nav-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .nav-btn.primary {
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            color: white;
+        }
+        
+        .nav-btn.secondary {
+            background: #f0f0f0;
+            color: #666;
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .avatar-svg {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 16px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 首页 -->
+        <div id="landing" class="hero">
+            <h1>副业人格测试</h1>
+            <p>3分钟测出你是什么搞钱类型<br>12道题，4个维度，16种副业人格</p>
+            <button class="btn" onclick="startQuiz()">开始测试</button>
+        </div>
+        
+        <!-- 问卷区 -->
+        <div id="quiz-section" class="hidden">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+            <div class="progress-text" id="progress-text">第 1 / 12 题</div>
+            
+            <!-- 问题1：维度1 - 创造者vs解题者 -->
+            <div class="question-card active" data-q="1" data-dim="creator">
+                <span class="dimension-tag">维度1/4：你靠什么赚钱？</span>
+                <h3>1. 你更享受哪个过程？</h3>
+                <div class="options">
+                    <label class="option" onclick="selectOption(this, 1, 'A')">
+                        <input type="radio" name="q1" value="A"> 写一篇文章、拍一条视频、设计一张图
+                    </label>
+                    <label class="option" onclick="selectOption(this, 1, 'B')">
+                        <input type="radio" name="q1" value="B"> 解决一个具体问题、完成一个任务、修好一个bug
+                    </label>
+                </div>
+            </div>
+            
+            <div class="question-card" data-q="2" data-dim="creator">
+                <span class="dimension-tag">维度1/4：你靠什么赚钱？</span>
+                <h3>2. 朋友找你帮忙，你更乐意帮哪个？</h3>
+                <div class="options">
+                    <label class="option" onclick="selectOption(this, 2, 'A')">
+                        <input type="radio" name="q2" value="A"> 帮我写个文案/拍个视频
+                    </label>
+                    <label class="option" onclick="selectOption(this, 2, 'B')">
+                        <input type="radio" name="q2" value="B"> 帮我修个电脑/做个表格/改个PPT
+                    </label>
+                </div>
+            </div>
+            
+            <div class="question-card" data-q="3" data-dim="creator">
+                <span class="dimension-tag">维度1/4：你靠什么赚钱？</span>
+                <h3>3. 你空闲时间更愿意做什么？</h3>
+                <div class="options">
+                    <label class="option" onclick="selectOption(this, 3, 'A')">
+                        <input type="radio" name="q3" value="A"> 写东西、拍东西、创作点什么
+                    </label>
+                    <label class="option" onclick="selectOption(this, 3, 'B')">
+                        <input type="radio" name="q3" value="B"> 学个新工具、做个小项目、优化某个流程
+                    </label>
+                </div>
+            </div>
+            
+            <!-- 问题4-6：维度2 - Hunter vs Farmer -->
+            <div class="question-card" data-q="4" data-dim="hunter">
+                <span class="dimension-tag">维度2/4：你的流量从哪来？</span>
+                <h3>4. 你更愿意在哪里展示自己？</h3>
+                <div class="options">
+                    <label class="option" onclick="selectOption(this, 4, 'A')">
+                        <input type="radio" name="q4" value="A"> 抖音、小红书、B站等公域平台
+                    </label>
+                    <label class="option" onclick="selectOption(this, 4, 'B')">
+                        <input type="radio" name="q4" value="B"> 微信、社群、朋友圈等私域
+                    </label>
+                </div>
+            </div>
+            
+            <div class="question-card" data-q="5" data-dim="hunter">
+                <span class="dimension-tag">维度2/4：你的流量从哪来？</span>
+                <h3>5. 你觉得哪种方式更稳妥？</h3>
+                <div class="options">
+                    <label class="option" onclick="selectOption(this, 5, 'A')">
+                        <input type="radio" name="q5" value="A"> 在平台积累粉丝，靠流量变现
+                    </label>
+                    <label class="option" onclick="selectOption(this, 5, 'B')">
+                        <input type="radio" name="q5" value="B"> 积累自己的客户名单，反复触达
+                    </label>
+                </div>
+            </div>
+            
+            <div class="question-card" data-q="6" data-dim="hunter">
+                <span class="dimension-tag">维度2/4：你的流量从哪来？</span>
+                <h3>6. 你更信任哪种方式？</h3>
+                <div class="options">
+                    <label class="option" onclick="selectOption(this, 6, 'A')">
+                        <input type="radio" name="q6" value="A"> 平台推荐算法
+                    </label>
+                    <label class="option" onclick="selectOption(this, 6, 'B')">
+                        <input type="radio" name="q6" value="B"> 口碑传播和熟人介绍
+                    </label>
+                </div>
+            </div>
+            
+            <!-- 问题7-9：维度3 - Solo vs Squad -->
+            <div class="question-card" data-q="7" data-dim="solo">
+                <span class="dimension-tag">维度3/4：你一个人还是一群人？</span>
+                <h3>7. 接到一个任务，你更倾向于？</h3>
+                <div class="options">
+                    <label class="option" onclick="selectOption(this, 7, 'A')">
+                        <input type="radio" name="q7" value="A"> 自己一个人搞定
+                    </label>
+                    <label class="option" onclick="selectOption(this, 7, 'B')">
+                        <input type="radio" name="q7" value="B"> 找人分工合作
+                    </label>
+                </div>
+            </div>
+            
+            <div class="question-card" data-q="8" data-dim="solo">
+                <span class="dimension-tag">维度3/4：你一个人还是一群人？</span>
+                <h3>8. 你更喜欢哪种工作状态？</h3>
+                <div class="options">
+                    <label class="option" onclick="selectOption(this, 8, 'A')">
+                        <input type="radio" name="q8" value="A"> 安静独处，专注做事
+                    </label>
+                    <label class="option" onclick="selectOption(this, 8, 'B')">
+                        <input type="radio" name="q8" value="B"> 多方沟通，协调推进
+                    </label>
+                </div>
+            </div>
+            
+            <div class="question-card" data-q="9" data-dim="solo">
+                <span class="dimension-tag">维度3/4：你一个人还是一群人？</span>
+                <h3>9. 遇到困难，你的第一反应是？</h3>
+                <div class="options">
+                    <label class="option" onclick="selectOption(this, 9, 'A')">
+                        <input type="radio" name="q9" value="A"> 自己查资料、想办法解决
+                    </label>
+                    <label class="option" onclick="selectOption(this, 9, 'B')">
+                        <input type="radio" name="q9" value="B"> 找人请教、寻求合作
+                    </label>
+                </div>
+            </div>
+            
+            <!-- 问题10-12：维度4 - Sprinter vs Grinder -->
+            <div class="question-card" data-q="10" data-dim="sprinter">
+                <span class="dimension-tag">维度4/4：你要快钱还是慢钱？</span>
+                <h3>10. 你做副业的主要目的是？</h3>
+                <div class="options">
+                    <label class="option" onclick="selectOption(this, 10, 'A')">
+                        <input type="radio" name="q10" value="A"> 尽快赚到钱
+                    </label>
+                    <label class="option" onclick="selectOption(this, 10, 'B')">
+                        <input type="radio" name="q10" value="B"> 建立一个长期可持续的事业
+                    </label>
+                </div>
+            </div>
+            
+            <div class="question-card" data-q="11" data-dim="sprinter">
+                <span class="dimension-tag">维度4/4：你要快钱还是慢钱？</span>
+                <h3>11. 你更能接受哪种状态？</h3>
+                <div class="options">
+                    <label class="option" onclick="selectOption(this, 11, 'A')">
+                        <input type="radio" name="q11" value="A"> 做了就能看到钱，但可能不稳定
+                    </label>
+                    <label class="option" onclick="selectOption(this, 11, 'B')">
+                        <input type="radio" name="q11" value="B"> 前期不赚钱，但越做越轻松
+                    </label>
+                </div>
+            </div>
+            
+            <div class="question-card" data-q="12" data-dim="sprinter">
+                <span class="dimension-tag">维度4/4：你要快钱还是慢钱？</span>
+                <h3>12. 你计划用多久验证一个副业？</h3>
+                <div class="options">
+                    <label class="option" onclick="selectOption(this, 12, 'A')">
+                        <input type="radio" name="q12" value="A"> 1个月，不行就换
+                    </label>
+                    <label class="option" onclick="selectOption(this, 12, 'B')">
+                        <input type="radio" name="q12" value="B"> 至少3个月，给足时间
+                    </label>
+                </div>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="nav-btn secondary" id="prev-btn" onclick="prevQuestion()" disabled>上一题</button>
+                <button class="nav-btn primary" id="next-btn" onclick="nextQuestion()" disabled>下一题</button>
+            </div>
+        </div>
+        
+        <!-- 结果页 -->
+        <div id="result-section" class="result-card">
+            <div class="identity-card">
+                <div id="avatar-container"></div>
+                <div class="identity-name" id="name">分析中...</div>
+                <div class="identity-english" id="english">The ...</div>
+                <div class="catchphrase" id="catchphrase">"..."</div>
+            </div>
+            
+            <div class="section" id="analysis-section">
+                <h3>你是哪种人</h3>
+                <div id="personality-desc"></div>
+            </div>
+            
+            <div class="section">
+                <h3>推荐你的3个副业方向</h3>
+                <div id="directions"></div>
+            </div>
+            
+            <div class="partner-section">
+                <h3>🤝 最佳搭档</h3>
+                <div id="partner"></div>
+            </div>
+            
+            <div class="weakness-section">
+                <h3>⚠️ 注意你的弱点</h3>
+                <div id="weakness"></div>
+            </div>
+            
+            <div class="section">
+                <h3>你的专属行动清单</h3>
+                <ul class="action-list" id="action-list"></ul>
+            </div>
+            
+            <div class="share-section">
+                <h3>📱 分享你的副业人格</h3>
+                <p>截图发朋友圈/小红书，找同类一起搞钱</p>
+                <div class="share-text" id="share-text"></div>
+                <button class="share-btn" onclick="copyShare()">复制分享文案</button>
+            </div>
+            
+            <!-- 引流区 -->
+            <div class="cta-section">
+                <h3>加入你的副业人格社群</h3>
+                <p>群里都是和你一样的<span id="type-label">XX型</span>，一起交流、互相搭伙</p>
+                <div style="text-align:center;"><img src="qrcode.jpg" alt="微信二维码" style="width:180px;height:180px;border-radius:12px;"></div>
+                <div class="wechat-id">微信号：juansir2026</div>
+                <p style="margin-top: 12px; font-size: 13px;">添加请备注"副业人格"</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let currentQ = 1;
+        let totalQ = 12;
+        let answers = {};
+        
+        function startQuiz() {
+            document.getElementById('landing').classList.add('hidden');
+            document.getElementById('quiz-section').classList.remove('hidden');
+            updateProgress();
+        }
+        
+        function updateProgress() {
+            const pct = (currentQ / totalQ) * 100;
+            document.getElementById('progress-fill').style.width = pct + '%';
+            document.getElementById('progress-text').innerText = `第 ${currentQ} / ${totalQ} 题`;
+            
+            document.getElementById('prev-btn').disabled = currentQ === 1;
+            document.getElementById('next-btn').disabled = answers['q' + currentQ] === undefined;
+            document.getElementById('next-btn').innerText = currentQ === totalQ ? '查看结果' : '下一题';
+        }
+        
+        function selectOption(el, q, val) {
+            const card = el.closest('.question-card');
+            card.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            el.querySelector('input').checked = true;
+            answers['q' + q] = val;
+            document.getElementById('next-btn').disabled = false;
+        }
+        
+        function nextQuestion() {
+            if (currentQ < totalQ) {
+                document.querySelector(`.question-card[data-q="${currentQ}"]`).classList.remove('active');
+                currentQ++;
+                document.querySelector(`.question-card[data-q="${currentQ}"]`).classList.add('active');
+                updateProgress();
+            } else {
+                showResult();
+            }
+        }
+        
+        function prevQuestion() {
+            if (currentQ > 1) {
+                document.querySelector(`.question-card[data-q="${currentQ}"]`).classList.remove('active');
+                currentQ--;
+                document.querySelector(`.question-card[data-q="${currentQ}"]`).classList.add('active');
+                updateProgress();
+            }
+        }
+        
+        function showResult() {
+            document.getElementById('quiz-section').classList.add('hidden');
+            document.getElementById('result-section').classList.add('active');
+            
+            // 计算4个维度
+            let creator = 0, solver = 0;
+            let hunter = 0, farmer = 0;
+            let solo = 0, squad = 0;
+            let sprinter = 0, grinder = 0;
+            
+            // 维度1：创造者vs解题者（问题1-3）
+            for (let i = 1; i <= 3; i++) {
+                if (answers['q' + i] === 'A') creator++;
+                else if (answers['q' + i] === 'B') solver++;
+            }
+            
+            // 维度2：猎人vs农夫（问题4-6）
+            for (let i = 4; i <= 6; i++) {
+                if (answers['q' + i] === 'A') hunter++;
+                else if (answers['q' + i] === 'B') farmer++;
+            }
+            
+            // 维度3：独狼vs组队（问题7-9）
+            for (let i = 7; i <= 9; i++) {
+                if (answers['q' + i] === 'A') solo++;
+                else if (answers['q' + i] === 'B') squad++;
+            }
+            
+            // 维度4：短跑vs肝帝（问题10-12）
+            for (let i = 10; i <= 12; i++) {
+                if (answers['q' + i] === 'A') sprinter++;
+                else if (answers['q' + i] === 'B') grinder++;
+            }
+            
+            // 生成代码
+            let code = '';
+            code += creator >= solver ? 'C' : 'S';
+            code += hunter >= farmer ? 'H' : 'F';
+            code += solo >= squad ? 'S' : 'Sq';
+            code += sprinter >= grinder ? 'S' : 'G';
+            
+            // 根据代码显示结果
+            const result = getPersonalityResult(code);
+            
+            document.getElementById('avatar-container').innerHTML = getAvatarSVG(result.name);
+            
+            document.getElementById('name').innerText = result.name;
+            document.getElementById('english').innerText = result.english;
+            document.getElementById('catchphrase').innerText = '"' + result.catchphrase + '"';
+            document.getElementById('personality-desc').innerHTML = result.desc;
+            document.getElementById('directions').innerHTML = result.directions;
+            document.getElementById('partner').innerHTML = result.partner;
+            document.getElementById('weakness').innerHTML = result.weakness;
+            document.getElementById('action-list').innerHTML = result.actions;
+            document.getElementById('type-label').innerText = result.name;
+            
+            // 生成分享文案
+            const shareText = `我测了我的【副业人格】\n\n我是：${result.name}\n口头禅："${result.catchphrase}"\n\n你的副业人格是什么？来测测 👇\n#副业人格`;            document.getElementById('share-text').innerText = shareText;
+        }
+        
+        function getPersonalityResult(code) {
+            const results = {
+                'CHSS': {
+                    name: '野生猎人',
+                    english: 'The Wild Hunter',
+                    catchphrase: '先发了再说，流量来了',
+                    desc: '<p>你是互联网上的猎人，看到流量就扑，打死不种地。一个人创作、靠平台流量、快速见效，追热点是你的本能。</p><p>你不喜欢慢慢积累，也不喜欢跟人合作。想到什么就做什么，发了再看数据，不行就换下一个。</p>',
+                    directions: directionTemplate('短视频口播', '热点图文账号', '直播切片/meme账号'),
+                    partner: partnerTemplate('种田工匠', '他负责种地（把流量变成资产），你负责打猎（搞流量）'),
+                    weakness: weaknessTemplate('三分钟热度', '给自己设定一个最低期限（比如30天），不到期限不许换项目'),
+                    actions: actionTemplate('今天就注册一个平台账号', '明天发第一条内容', '连续发30天，每天1条，不许断更')
+                },
+                'CHSqS': {
+                    name: '流量黑客',
+                    english: 'The Traffic Hacker',
+                    catchphrase: '这个模式复制100个号，一波起量',
+                    desc: '<p>你是互联网上的雇佣兵，哪里有钱就往哪打，团队作战效率拉满。懂平台规则、会整合资源、快速放大流量。</p><p>你不满足于做一个号，你要做矩阵、做投放、做规模化。你擅长找规律，一个模式跑通就复制100个。</p>',
+                    directions: directionTemplate('MCN/矩阵运营', '流量投放/广告中介', '内容团队管理'),
+                    partner: partnerTemplate('独狼型创作者', '你负责协调和放大，他负责执行和产出'),
+                    weakness: weaknessTemplate('贪多嚼不烂', '一次只攻一个模式，跑通了再复制，不要盲目扩张'),
+                    actions: actionTemplate('今天研究3个同领域爆款账号', '明天注册3个账号开始测试', '7天后保留最好的1个模式，砍掉其他')
+                },
+                'CFSS': {
+                    name: '闪电产品人',
+                    english: 'The Solo Maker',
+                    catchphrase: '做一遍，卖一万次',
+                    desc: '<p>你是互联网上的炼金术士，一个人做出产品，然后自动化收钱。创造内容、经营私域、一个人搞定、快速变现。</p><p>你擅长把知识或技能变成标准化产品，然后反复售卖。你不喜欢重复劳动，追求的是"做一次，赚多次"。</p>',
+                    directions: directionTemplate('模板/资料包售卖', '小课/录播课', '小工具/小程序'),
+                    partner: partnerTemplate('社交悍匪型', '你负责做产品，他负责推广和销售'),
+                    weakness: weaknessTemplate('闭门造车', '先做预售，有人付费了再做产品，不要先做出来再找人'),
+                    actions: actionTemplate('今天列出你能做出什么产品', '明天发一条朋友圈测试需求', '有10个人感兴趣就开始做')
+                },
+                'SFSG': {
+                    name: '种田工匠',
+                    english: 'The Artisan Farmer',
+                    catchphrase: '打磨好每一个作品，客户会自己找来',
+                    desc: '<p>你是互联网上的老农，不追热点，只在自己的一亩三分地精耕细作。用技能吃饭、经营私域、一个人安安静静做交付。</p><p>你不急着赚钱，相信只要作品够好，客户自然会来。你擅长打磨细节，一个作品可以反复优化。</p>',
+                    directions: directionTemplate('文案代写/内容代运营', '设计/作图接单', '1v1咨询/专业顾问'),
+                    partner: partnerTemplate('野生猎人', '他负责打猎（搞流量），你负责种地（交付服务）'),
+                    weakness: weaknessTemplate('过度打磨', '设定截止时间，到点必须交付，完成比完美重要'),
+                    actions: actionTemplate('今天整理3个最佳作品做成案例集', '明天在2个平台发布接单信息', '本周主动私信10个潜在客户')
+                },
+                'SFSqG': {
+                    name: '事业合伙人',
+                    english: 'The Business Partner',
+                    catchphrase: '这不是交易，是合伙',
+                    desc: '<p>你是互联网上的领主，有地盘有资源，长期经营不动如山。有技能、有人脉、长期经营、建立合作生态。</p><p>你不做一锤子买卖，你建立长期关系。你擅长资源整合，能把不同的人凑在一起做成一件事。</p>',
+                    directions: directionTemplate('联合创始人/技术合伙人', '长期顾问/深度服务', '服务团队/外包公司'),
+                    partner: partnerTemplate('野生猎人', '他负责打猎（搞新流量），你负责种地（维护老客户）'),
+                    weakness: weaknessTemplate('过度谨慎', '设定决策时限，48小时内必须做决定，不要无限期评估'),
+                    actions: actionTemplate('今天列出你的所有资源和技能', '明天找1个有流量的人聊合作', '本周把合作模式谈定，签下第一个合作')
+                },
+                'SHSS': {
+                    name: '接单快手',
+                    english: 'The Fast Hand',
+                    catchphrase: '今天接单，明天到账',
+                    desc: '<p>你是互联网上的手艺人，有技能就要马上变现。靠平台接单、快速交付、当天见钱，用时间换收入。</p><p>你不喜欢等，学了技能就要马上用。你追求的是确定性，做完一单拿一单的钱，心里踏实。</p>',
+                    directions: directionTemplate('闲鱼/淘宝接单', '猪八戒网/站酷服务', '私域接单（朋友圈/社群）'),
+                    partner: partnerTemplate('闪电产品人', '他擅长把技能变成产品，你擅长快速交付'),
+                    weakness: weaknessTemplate('收入天花板低', '在接单的同时，准备一个可售卖的产品，逐步从时间换钱转向产品换钱'),
+                    actions: actionTemplate('今天在2个平台发布服务信息', '明天主动接第一单，哪怕价格低', '本周完成3单，积累案例和好评')
+                },
+                'SFSqS': {
+                    name: '资源整合者',
+                    english: 'The Connector',
+                    catchphrase: '你缺人，我有人，抽成就行',
+                    desc: '<p>你是互联网上的掮客，擅长把需求和供给撮合在一起。你不需要自己干活，你只需要知道谁需要什么、谁有什么。</p><p>你擅长建立人脉网络，信息差就是你的利润。你不喜欢单打独斗，喜欢当连接的枢纽。</p>',
+                    directions: directionTemplate('中介/撮合服务', '招聘/资源对接', '社群运营/团购'),
+                    partner: partnerTemplate('种田工匠', '他负责交付，你负责找客户和协调'),
+                    weakness: weaknessTemplate('容易被跳单', '建立标准化流程和信任机制，让客户觉得通过你更省心'),
+                    actions: actionTemplate('今天列出你认识的10个有需求的人', '明天列出10个能提供服务的', '本周促成第一笔撮合，哪怕抽成低')
+                },
+                'CFSqG': {
+                    name: '内容领主',
+                    english: 'The Content Lord',
+                    catchphrase: '建一个系统，让它自己运转',
+                    desc: '<p>你是互联网上的建筑师，不满足于做一个号，而是要搭建一个内容帝国。你擅长搭建体系、培养团队、长期经营。</p><p>你追求的是可规模化，一个人能做的事有限，但一个系统能做的事无限。你擅长把个人能力变成组织能力。</p>',
+                    directions: directionTemplate('MCN机构/内容矩阵', '付费专栏/订阅制内容', '行业媒体/垂直平台'),
+                    partner: partnerTemplate('野生猎人', '他负责冲锋陷阵追热点，你负责后方搭建体系'),
+                    weakness: weaknessTemplate('起步慢', '先自己跑通一个最小模型，验证可行后再放大，不要一开始就追求规模化'),
+                    actions: actionTemplate('今天写一份内容生产SOP', '明天测试自己能不能按SOP日产3条', '本周招募第一个兼职执行者')
+                },
+                'CHSG': {
+                    name: '垂类匠人',
+                    english: 'The Niche Artisan',
+                    catchphrase: '在一个领域做到不可替代',
+                    desc: '<p>你是互联网上的匠人，专注一个细分领域，靠内容深度建立壁垒。你享受创作过程，也愿意花时间去打磨。</p><p>你在平台上不追热点，而是做深度内容。你相信把一个领域做穿，比到处开花更值钱。</p>',
+                    directions: directionTemplate('垂类知识博主', '深度图文专栏', '细分领域播客'),
+                    partner: partnerTemplate('流量黑客', '他负责放大和规模化，你负责内容深度'),
+                    weakness: weaknessTemplate('变现慢', '在创作的同时设计变现路径，比如知识星球、付费专栏，不要等到粉丝多了再变现'),
+                    actions: actionTemplate('今天确定一个细分领域', '明天写一篇深度文章，发布到2个平台', '每周输出1篇深度内容，持续3个月')
+                },
+                'CHSqG': {
+                    name: '矩阵之王',
+                    english: 'The Matrix King',
+                    catchphrase: '一个模式跑通，复制100个',
+                    desc: '<p>你是互联网上的矩阵操盘手，擅长把内容流程化、团队化。你不做内容，你搭建内容的流水线。</p><p>你懂平台规则，也懂组织管理。你的目标不是做一个大号，而是做100个号组成的矩阵。</p>',
+                    directions: directionTemplate('MCN/矩阵运营', '内容代运营团队', '自媒体工作室'),
+                    partner: partnerTemplate('垂类匠人', '他负责内容深度，你负责规模化放大'),
+                    weakness: weaknessTemplate('质量参差不齐', '建立标准化内容审核机制，确保矩阵内所有账号的品质底线'),
+                    actions: actionTemplate('今天写一份完整的运营SOP', '明天注册3个测试账号', '7天后评估数据，确定矩阵模型')
+                },
+                'CFSqS': {
+                    name: '快闪群主',
+                    english: 'The Flash Host',
+                    catchphrase: '7天快闪，一波收完',
+                    desc: '<p>你是互联网上的快闪店长，擅长快速组建社群、组织活动、限时变现。你享受组局的过程，也擅长制造紧迫感。</p><p>你不喜欢维护长期社群，你做的是快速集结、快速交付、快速解散的快闪模式。</p>',
+                    directions: directionTemplate('快闪群/限时训练营', '直播快闪活动', '社群团购/接龙'),
+                    partner: partnerTemplate('种田工匠', '他负责长期交付，你负责快速招募'),
+                    weakness: weaknessTemplate('复购低', '每次快闪后收集用户反馈，沉淀有价值的用户到长期社群'),
+                    actions: actionTemplate('今天设计一个7天快闪活动主题', '明天招募第一批50个用户', '7天后交付并收集反馈')
+                },
+                'CFSG': {
+                    name: 'IP品牌主',
+                    english: 'The IP Owner',
+                    catchphrase: '名字就是信任，IP就是资产',
+                    desc: '<p>你是互联网上的品牌主理人，在私域长期经营个人品牌。你不追求流量，追求信任。</p><p>你相信个人IP是最值钱的资产，愿意花3年时间去建立，然后用10年去收获。</p>',
+                    directions: directionTemplate('个人IP账号', '私域社群/会员制', '高价咨询/教练服务'),
+                    partner: partnerTemplate('野生猎人', '他负责搞流量，你负责把流量变成信任'),
+                    weakness: weaknessTemplate('起步极慢', '设定阶段性小目标，3个月1000粉、6个月5000粉，用里程碑激励自己'),
+                    actions: actionTemplate('今天写一份个人品牌定位文档', '明天发布第一条个人品牌内容', '每周输出2条深度内容，持续3个月')
+                },
+                'SHSqS': {
+                    name: '众包队长',
+                    english: 'The Crowd Leader',
+                    catchphrase: '你缺人，我有人，抽成就行',
+                    desc: '<p>你是互联网上的包工头，擅长把需求和供给撮合在一起。你不需要自己干活，你只需要知道谁需要什么、谁有什么。</p><p>你擅长组织人力，快速完成任务。你的生意是连接，不是执行。</p>',
+                    directions: directionTemplate('任务众包/兼职平台', '接单中介', '灵活用工撮合'),
+                    partner: partnerTemplate('种田工匠', '他负责交付，你负责找客户和分配任务'),
+                    weakness: weaknessTemplate('被跳单', '建立标准化流程和信任机制，让客户觉得通过你更省心'),
+                    actions: actionTemplate('今天列出你认识的10个有需求的人', '明天列出10个能提供服务的', '本周促成第一笔撮合，哪怕抽成低')
+                },
+                'SHSG': {
+                    name: '平台专家',
+                    english: 'The Platform Expert',
+                    catchphrase: '成为平台的头部，流量自己找你',
+                    desc: '<p>你是互联网上的专家，在公域平台长期深耕一个专业领域。你的目标是成为某个平台的头部专家。</p><p>你不追热点，也不做矩阵。你只做一件事：把专业度做到让平台不得不推荐你。</p>',
+                    directions: directionTemplate('知乎好物/专业答主', '小红书专业买手', 'B站知识区UP主'),
+                    partner: partnerTemplate('闪电产品人', '他擅长做产品，你擅长做专业内容'),
+                    weakness: weaknessTemplate('变现路径单一', '在积累专业声誉的同时，设计多条变现路径，不要只依赖平台流量'),
+                    actions: actionTemplate('今天确定一个平台和一个专业领域', '明天回答5个专业问题或发布1条专业内容', '每周持续输出，坚持3个月看效果')
+                },
+                'SHSqG': {
+                    name: '外包之王',
+                    english: 'The Service King',
+                    catchphrase: '标准化、规模化、公司化',
+                    desc: '<p>你是互联网上的服务商，擅长把个人技能标准化，然后交给团队执行。你的目标是把一个人的工作室变成一家公司。</p><p>你懂业务，也懂管理。你不满足于接单，你想建立一个可以自动运转的服务体系。</p>',
+                    directions: directionTemplate('代运营公司', '外包服务团队', '标准化服务工作室'),
+                    partner: partnerTemplate('事业合伙人', '他擅长资源整合，你擅长业务标准化'),
+                    weakness: weaknessTemplate('管理能力跟不上', '先从1-2个兼职开始，不要一下子招很多人，逐步建立管理能力'),
+                    actions: actionTemplate('今天写一份服务SOP', '明天找1个兼职执行者测试', '7天后评估外包可行性，决定是否扩大')
+                },
+                'SFSS': {
+                    name: '快闪工匠',
+                    english: 'The Flash Artisan',
+                    catchphrase: '限时接单，快速交付，日结',
+                    desc: '<p>你是互联网上的手艺人，在私域快速提供短期服务。你不喜欢长期绑定的客户，你做的是一单一结的生意。</p><p>你有技能，但不想被技能困住。你追求灵活，今天想接就接，明天想歇就歇。</p>',
+                    directions: directionTemplate('私域急单/临时服务', '朋友圈接单', '微信群限时接单'),
+                    partner: partnerTemplate('快闪群主', '他负责快速招募，你负责快速交付'),
+                    weakness: weaknessTemplate('收入不稳定', '在接单的同时，准备一份可售卖的产品，逐步降低对即时接单的依赖'),
+                    actions: actionTemplate('今天在朋友圈/社群发布你的服务清单', '明天接第一单', '本周完成5单，积累客户评价')
+                }
+            };
+            
+            return results[code] || results['CHSS'];
+        }
+        
+        function directionTemplate(dir1, dir2, dir3) {
+            return `
+                <div class="direction-item">
+                    <h4>方向1：${dir1}（最推荐）</h4>
+                    <p>起步成本：0-500元</p>
+                    <p>预期收入：月入3000-10000+</p>
+                    <p>第一步：今天就动手，不要等准备完美</p>
+                </div>
+                <div class="direction-item">
+                    <h4>方向2：${dir2}</h4>
+                    <p>起步成本：0-1000元</p>
+                    <p>预期收入：月入2000-8000</p>
+                    <p>第一步：先研究3个对标账号，模仿起步</p>
+                </div>
+                <div class="direction-item">
+                    <h4>方向3：${dir3}</h4>
+                    <p>起步成本：0-500元</p>
+                    <p>预期收入：月入1000-5000</p>
+                    <p>第一步：用最小成本验证，先跑通一个闭环</p>
+                </div>
+            `;
+        }
+        
+        function partnerTemplate(type, desc) {
+            return `<p>找 <strong>${type}</strong> 搭档</p><p>${desc}。</p>`;
+        }
+        
+        function weaknessTemplate(weakness, advice) {
+            return `<p>你容易<strong>${weakness}</strong>。</p><p>建议：${advice}。</p>`;
+        }
+        
+        function actionTemplate(a1, a2, a3) {
+            return `
+                <li>1. ${a1}</li>
+                <li>2. ${a2}</li>
+                <li>3. ${a3}</li>
+            `;
+        }
+        
+        function getAvatarSVG(name) {
+            let svg = '';
+            switch(name) {
+                case '野生猎人':
+                    svg = `<svg class="avatar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="55" fill="#ff6b6b" opacity="0.15"/>
+                        <circle cx="60" cy="60" r="45" fill="#ff6b6b" opacity="0.2"/>
+                        <path d="M 70 45 L 95 30 L 85 45 Z" fill="#ff6b6b"/>
+                        <path d="M 95 30 Q 75 40 55 50" stroke="#ff6b6b" stroke-width="3" fill="none"/>
+                        <circle cx="45" cy="55" r="8" fill="#fff"/>
+                        <circle cx="42" cy="52" r="3" fill="#333"/>
+                        <path d="M 35 65 Q 45 70 55 65" stroke="#333" stroke-width="2" fill="none"/>
+                        <circle cx="45" cy="40" r="12" fill="#ff6b6b" opacity="0.3"/>
+                    </svg>`;
+                    break;
+                case '种田工匠':
+                    svg = `<svg class="avatar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="55" fill="#4ecdc4" opacity="0.15"/>
+                        <circle cx="60" cy="60" r="45" fill="#4ecdc4" opacity="0.2"/>
+                        <rect x="55" y="30" width="10" height="50" fill="#8b6914" rx="2"/>
+                        <path d="M 45 80 L 60 95 L 75 80 Z" fill="#666"/>
+                        <path d="M 50 35 L 55 30 L 60 35 L 65 30 L 70 35" stroke="#4ecdc4" stroke-width="2" fill="none"/>
+                        <circle cx="60" cy="45" r="3" fill="#4ecdc4"/>
+                    </svg>`;
+                    break;
+                case '流量黑客':
+                    svg = `<svg class="avatar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="55" fill="#9b59b6" opacity="0.15"/>
+                        <circle cx="60" cy="60" r="45" fill="#9b59b6" opacity="0.2"/>
+                        <rect x="35" y="30" width="16" height="22" fill="#fff" stroke="#9b59b6" stroke-width="2" rx="2"/>
+                        <rect x="55" y="25" width="16" height="22" fill="#fff" stroke="#9b59b6" stroke-width="2" rx="2"/>
+                        <rect x="75" y="32" width="16" height="22" fill="#fff" stroke="#9b59b6" stroke-width="2" rx="2"/>
+                        <rect x="45" y="52" width="16" height="22" fill="#fff" stroke="#9b59b6" stroke-width="2" rx="2"/>
+                        <rect x="65" y="48" width="16" height="22" fill="#fff" stroke="#9b59b6" stroke-width="2" rx="2"/>
+                        <circle cx="43" cy="41" r="3" fill="#9b59b6"/>
+                        <circle cx="63" cy="36" r="3" fill="#9b59b6"/>
+                        <circle cx="83" cy="43" r="3" fill="#9b59b6"/>
+                    </svg>`;
+                    break;
+                case '闪电产品人':
+                    svg = `<svg class="avatar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="55" fill="#f39c12" opacity="0.15"/>
+                        <circle cx="60" cy="60" r="45" fill="#f39c12" opacity="0.2"/>
+                        <path d="M 70 30 L 45 60 L 60 60 L 50 90 L 80 55 L 65 55 Z" fill="#f39c12"/>
+                        <circle cx="60" cy="60" r="55" fill="none" stroke="#f39c12" stroke-width="2" stroke-dasharray="8,4" opacity="0.3"/>
+                    </svg>`;
+                    break;
+                case '事业合伙人':
+                    svg = `<svg class="avatar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="55" fill="#2ecc71" opacity="0.15"/>
+                        <circle cx="60" cy="60" r="45" fill="#2ecc71" opacity="0.2"/>
+                        <circle cx="40" cy="50" r="12" fill="#fff" stroke="#2ecc71" stroke-width="2"/>
+                        <circle cx="80" cy="50" r="12" fill="#fff" stroke="#2ecc71" stroke-width="2"/>
+                        <path d="M 40 62 L 40 75 M 80 62 L 80 75" stroke="#2ecc71" stroke-width="3"/>
+                        <path d="M 50 75 Q 60 85 70 75" stroke="#2ecc71" stroke-width="2" fill="none"/>
+                        <circle cx="40" cy="48" r="3" fill="#2ecc71"/>
+                        <circle cx="80" cy="48" r="3" fill="#2ecc71"/>
+                    </svg>`;
+                    break;
+                case '接单快手':
+                    svg = `<svg class="avatar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="55" fill="#e74c3c" opacity="0.15"/>
+                        <circle cx="60" cy="60" r="45" fill="#e74c3c" opacity="0.2"/>
+                        <circle cx="60" cy="60" r="25" fill="none" stroke="#e74c3c" stroke-width="3"/>
+                        <circle cx="60" cy="60" r="18" fill="none" stroke="#e74c3c" stroke-width="2"/>
+                        <line x1="60" y1="35" x2="60" y2="45" stroke="#e74c3c" stroke-width="3"/>
+                        <line x1="60" y1="75" x2="60" y2="85" stroke="#e74c3c" stroke-width="3"/>
+                        <line x1="35" y1="60" x2="45" y2="60" stroke="#e74c3c" stroke-width="3"/>
+                        <line x1="75" y1="60" x2="85" y2="60" stroke="#e74c3c" stroke-width="3"/>
+                        <circle cx="60" cy="60" r="3" fill="#e74c3c"/>
+                    </svg>`;
+                    break;
+                case '资源整合者':
+                    svg = `<svg class="avatar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="55" fill="#3498db" opacity="0.15"/>
+                        <circle cx="60" cy="60" r="45" fill="#3498db" opacity="0.2"/>
+                        <rect x="35" y="35" width="20" height="20" fill="#fff" stroke="#3498db" stroke-width="2" rx="3"/>
+                        <rect x="65" y="35" width="20" height="20" fill="#fff" stroke="#3498db" stroke-width="2" rx="3"/>
+                        <rect x="50" y="65" width="20" height="20" fill="#fff" stroke="#3498db" stroke-width="2" rx="3"/>
+                        <line x1="55" y1="45" x2="65" y2="45" stroke="#3498db" stroke-width="2"/>
+                        <line x1="60" y1="55" x2="60" y2="65" stroke="#3498db" stroke-width="2"/>
+                    </svg>`;
+                    break;
+                case '内容领主':
+                    svg = `<svg class="avatar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="55" fill="#f1c40f" opacity="0.15"/>
+                        <circle cx="60" cy="60" r="45" fill="#f1c40f" opacity="0.2"/>
+                        <path d="M 60 25 L 68 45 L 85 45 L 72 55 L 77 72 L 60 62 L 43 72 L 48 55 L 35 45 L 52 45 Z" fill="#f1c40f"/>
+                        <circle cx="60" cy="60" r="55" fill="none" stroke="#f1c40f" stroke-width="2" stroke-dasharray="4,4" opacity="0.5"/>
+                    </svg>`;
+                    break;
+                case '垂类匠人':
+                    svg = `<svg class="avatar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="55" fill="#1abc9c" opacity="0.15"/>
+                        <circle cx="60" cy="60" r="45" fill="#1abc9c" opacity="0.2"/>
+                        <rect x="55" y="25" width="10" height="40" fill="#8b6914" rx="2"/>
+                        <path d="M 50 65 L 55 75 L 65 75 L 70 65 Z" fill="#666"/>
+                        <path d="M 40 40 L 60 30 L 80 40" stroke="#1abc9c" stroke-width="2" fill="none"/>
+                        <circle cx="60" cy="50" r="4" fill="#1abc9c"/>
+                    </svg>`;
+                    break;
+                case '矩阵之王':
+                    svg = `<svg class="avatar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="55" fill="#8e44ad" opacity="0.15"/>
+                        <circle cx="60" cy="60" r="45" fill="#8e44ad" opacity="0.2"/>
+                        <rect x="30" y="30" width="18" height="18" fill="#fff" stroke="#8e44ad" stroke-width="2" rx="2"/>
+                        <rect x="52" y="30" width="18" height="18" fill="#fff" stroke="#8e44ad" stroke-width="2" rx="2"/>
+                        <rect x="74" y="30" width="18" height="18" fill="#fff" stroke="#8e44ad" stroke-width="2" rx="2"/>
+                        <rect x="30" y="52" width="18" height="18" fill="#fff" stroke="#8e44ad" stroke-width="2" rx="2"/>
+                        <rect x="52" y="52" width="18" height="18" fill="#fff" stroke="#8e44ad" stroke-width="2" rx="2"/>
+                        <rect x="74" y="52" width="18" height="18" fill="#fff" stroke="#8e44ad" stroke-width="2" rx="2"/>
+                        <rect x="30" y="74" width="18" height="18" fill="#fff" stroke="#8e44ad" stroke-width="2" rx="2"/>
+                        <rect x="52" y="74" width="18" height="18" fill="#fff" stroke="#8e44ad" stroke-width="2" rx="2"/>
+                        <rect x="74" y="74" width="18" height="18" fill="#fff" stroke="#8e44ad" stroke-width="2" rx="2"/>
+                    </svg>`;
+                    break;
+                case '快闪群主':
+                    svg = `<svg class="avatar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="55" fill="#e67e22" opacity="0.15"/>
+                        <circle cx="60" cy="60" r="45" fill="#e67e22" opacity="0.2"/>
+                        <path d="M 50 35 L 55 50 L 70 50 L 60 60 L 65 75 L 50 65 L 35 75 L 40 60 L 30 50 L 45 50 Z" fill="#e67e22"/>
+                        <circle cx="60" cy="60" r="55" fill="none" stroke="#e67e22" stroke-width="2" stroke-dasharray="6,3" opacity="0.3"/>
+                    </svg>`;
+                    break;
+                case 'IP品牌主':
+                    svg = `<svg class="avatar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="55" fill="#c0392b" opacity="0.15"/>
+                        <circle cx="60" cy="60" r="45" fill="#c0392b" opacity="0.2"/>
+                        <rect x="45" y="30" width="30" height="40" fill="#c0392b" rx="3"/>
+                        <rect x="50" y="35" width="20" height="8" fill="#fff" rx="1"/>
+                        <text x="55" y="42" font-size="10" fill="#c0392b">IP</text>
+                        <path d="M 50 70 L 55 75 L 65 75 L 60 70" fill="#fff" opacity="0.3"/>
+                        <circle cx="60" cy="25" r="4" fill="#c0392b"/>
+                    </svg>`;
+                    break;
+                case '众包队长':
+                    svg = `<svg class="avatar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="55" fill="#16a085" opacity="0.15"/>
+                        <circle cx="60" cy="60" r="45" fill="#16a085" opacity="0.2"/>
+                        <circle cx="40" cy="45" r="8" fill="#fff" stroke="#16a085" stroke-width="2"/>
+                        <circle cx="60" cy="35" r="8" fill="#fff" stroke="#16a085" stroke-width="2"/>
+                        <circle cx="80" cy="45" r="8" fill="#fff" stroke="#16a085" stroke-width="2"/>
+                        <circle cx="50" cy="65" r="8" fill="#fff" stroke="#16a085" stroke-width="2"/>
+                        <circle cx="70" cy="65" r="8" fill="#fff" stroke="#16a085" stroke-width="2"/>
+                        <line x1="40" y1="45" x2="50" y2="65" stroke="#16a085" stroke-width="1.5"/>
+                        <line x1="60" y1="35" x2="50" y2="65" stroke="#16a085" stroke-width="1.5"/>
+                        <line x1="60" y1="35" x2="70" y2="65" stroke="#16a085" stroke-width="1.5"/>
+                        <line x1="80" y1="45" x2="70" y2="65" stroke="#16a085" stroke-width="1.5"/>
+                    </svg>`;
+                    break;
+                case '平台专家':
+                    svg = `<svg class="avatar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="55" fill="#d35400" opacity="0.15"/>
+                        <circle cx="60" cy="60" r="45" fill="#d35400" opacity="0.2"/>
+                        <path d="M 60 25 L 70 45 L 90 45 L 75 60 L 80 80 L 60 68 L 40 80 L 45 60 L 30 45 L 50 45 Z" fill="#d35400"/>
+                        <circle cx="60" cy="60" r="55" fill="none" stroke="#d35400" stroke-width="2" stroke-dasharray="5,5" opacity="0.3"/>
+                    </svg>`;
+                    break;
+                case '外包之王':
+                    svg = `<svg class="avatar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="55" fill="#7f8c8d" opacity="0.15"/>
+                        <circle cx="60" cy="60" r="45" fill="#7f8c8d" opacity="0.2"/>
+                        <rect x="35" y="40" width="50" height="35" fill="#fff" stroke="#7f8c8d" stroke-width="2" rx="3"/>
+                        <rect x="42" y="48" width="12" height="12" fill="#7f8c8d" opacity="0.3"/>
+                        <rect x="58" y="48" width="12" height="12" fill="#7f8c8d" opacity="0.3"/>
+                        <rect x="42" y="62" width="12" height="8" fill="#7f8c8d" opacity="0.3"/>
+                        <rect x="58" y="62" width="12" height="8" fill="#7f8c8d" opacity="0.3"/>
+                        <rect x="35" y="35" width="50" height="8" fill="#7f8c8d" opacity="0.5" rx="2"/>
+                    </svg>`;
+                    break;
+                case '快闪工匠':
+                    svg = `<svg class="avatar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="55" fill="#e91e63" opacity="0.15"/>
+                        <circle cx="60" cy="60" r="45" fill="#e91e63" opacity="0.2"/>
+                        <rect x="45" y="35" width="30" height="22" fill="#fff" stroke="#e91e63" stroke-width="2" rx="3"/>
+                        <rect x="50" y="42" width="8" height="8" fill="#e91e63" opacity="0.3"/>
+                        <rect x="62" y="42" width="8" height="8" fill="#e91e63" opacity="0.3"/>
+                        <rect x="40" y="60" width="12" height="12" fill="#fff" stroke="#e91e63" stroke-width="2" rx="2"/>
+                        <rect x="56" y="60" width="12" height="12" fill="#fff" stroke="#e91e63" stroke-width="2" rx="2"/>
+                        <rect x="72" y="60" width="12" height="12" fill="#fff" stroke="#e91e63" stroke-width="2" rx="2"/>
+                        <circle cx="60" cy="50" r="55" fill="none" stroke="#e91e63" stroke-width="2" stroke-dasharray="4,4" opacity="0.2"/>
+                    </svg>`;
+                    break;
+                default:
+                    svg = `<svg class="avatar-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="60" cy="60" r="55" fill="#3498db" opacity="0.15"/>
+                        <circle cx="60" cy="60" r="45" fill="#3498db" opacity="0.2"/>
+                        <circle cx="60" cy="50" r="20" fill="#fff" stroke="#3498db" stroke-width="2"/>
+                        <circle cx="55" cy="46" r="3" fill="#3498db"/>
+                        <circle cx="65" cy="46" r="3" fill="#3498db"/>
+                        <path d="M 52 55 Q 60 62 68 55" stroke="#3498db" stroke-width="2" fill="none"/>
+                    </svg>`;
+            }
+            return svg;
+        }
+        
+        function copyShare() {
+            const text = document.getElementById('share-text').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('分享文案已复制！去朋友圈/小红书粘贴吧~');
+            }).catch(() => {
+                alert('复制失败，请手动复制上方的文案');
+            });
+        }
+    </script>
+</body>
+</html>
