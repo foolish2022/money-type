@@ -383,6 +383,7 @@
             display: block;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -728,7 +729,16 @@
             document.getElementById('type-label').innerText = result.name;
             
             // 生成分享文案
-            const shareText = `我测了我的【副业人格】\n\n我是：${result.name}\n口头禅："${result.catchphrase}"\n\n你的副业人格是什么？来测测 👇\nhttps://foolish2022.github.io/money-type/\n\n#副业人格`;            document.getElementById('share-text').innerText = shareText;
+            const shareText = `我测了我的【副业人格】
+
+我是：${result.name}
+口头禅："${result.catchphrase}"
+
+你的副业人格是什么？来测测 👇
+https://foolish2022.github.io/money-type/
+
+#副业人格`;
+            document.getElementById('share-text').textContent = shareText;
         }
         
         function getPersonalityResult(code) {
