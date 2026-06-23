@@ -299,6 +299,12 @@
             white-space: pre-wrap;
             word-wrap: break-word;
             min-height: 60px;
+            width: 100%;
+            border: none;
+            resize: none;
+            outline: none;
+            font-family: inherit;
+            box-sizing: border-box;
         }
         
         /* 引流区 */
@@ -601,12 +607,13 @@
                 <ul class="action-list" id="action-list"></ul>
             </div>
             
+            <!-- 分享区 -->
             <div class="share-section">
-                <h3>📱 分享你的副业人格</h3>
+                <h3>📱 保存结果到相册</h3>
                 <p>截图发朋友圈/小红书，找同类一起搞钱</p>
-                <div class="share-text" id="share-text"></div>
+                <textarea id="share-text" class="share-text" readonly></textarea>
                 <button class="share-btn" onclick="copyShare()">邀请好友也来测测</button>
-                <button class="share-btn" onclick="downloadScreenshot()" style="margin-top: 10px; background: #2196F3;">下载结果图片</button>
+                <button class="share-btn" onclick="downloadScreenshot()" style="margin-top: 10px; background: #2196F3;">保存结果到相册</button>
             </div>
             
             <!-- 引流区 -->
@@ -729,16 +736,8 @@
             document.getElementById('type-label').innerText = result.name;
             
             // 生成分享文案
-            const shareText = `我测了我的【副业人格】
-
-我是：${result.name}
-口头禅："${result.catchphrase}"
-
-你的副业人格是什么？来测测 👇
-https://foolish2022.github.io/money-type/
-
-#副业人格`;
-            document.getElementById('share-text').textContent = shareText;
+            var shareText = "我测了我的【副业人格】\n\n我是：" + result.name + "\n口头禅：" + result.catchphrase + "\n\n你的副业人格是什么？来测测 👇\nhttps://foolish2022.github.io/money-type/\n\n#副业人格";
+            document.getElementById('share-text').value = shareText;
         }
         
         function getPersonalityResult(code) {
@@ -1144,24 +1143,12 @@ https://foolish2022.github.io/money-type/
         }
         
         function copyShare() {
-            const text = document.getElementById('share-text').innerText;
+            var text = document.getElementById('share-text').value;
             if (!text || text.trim() === '') {
                 alert('分享文案为空，请刷新页面重新测试');
                 return;
             }
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(() => {
-                    alert('文案已复制！去朋友圈/小红书粘贴吧~');
-                }).catch(() => {
-                    fallbackCopy(text);
-                });
-            } else {
-                fallbackCopy(text);
-            }
-        }
-        
-        function fallbackCopy(text) {
-            const textarea = document.createElement('textarea');
+            var textarea = document.createElement('textarea');
             textarea.value = text;
             textarea.style.position = 'fixed';
             textarea.style.left = '-9999px';
