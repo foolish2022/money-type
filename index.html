@@ -649,27 +649,12 @@
                 <ul class="action-list" id="action-list"></ul>
             </div>
             
-            <!-- 分享卡片 -->
-            <div class="share-card" id="share-card">
-                <div class="share-card-top">
-                    <div class="share-card-avatar" id="share-card-avatar"></div>
-                    <div class="share-card-info">
-                        <div class="share-card-name" id="share-card-name">野生猎人</div>
-                        <div class="share-card-catchphrase" id="share-card-catchphrase">"先发了再说，流量来了"</div>
-                    </div>
-                </div>
-                <div class="share-card-body">
-                    <div class="share-card-label">适合我的3个副业方向</div>
-                    <div class="share-card-directions" id="share-card-directions">短视频带货 / 直播切片 / 热点内容</div>
-                </div>
-                <div class="share-card-footer">
-                    <div class="share-card-qr">测测你的 👇</div>
-                    <div class="share-card-link">foolish2022.github.io/money-type</div>
-                </div>
+            <!-- 一键分享 -->
+            <div class="share-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                <h3>📲 邀请好友测测</h3>
+                <p style="opacity: 0.9;">测完的朋友，推荐他们也来试试</p>
+                <button class="share-btn" onclick="shareToFriend()" id="share-btn" style="background: white; color: #667eea; font-weight: bold;">复制分享文案</button>
             </div>
-            <p style="text-align: center; color: #999; font-size: 13px; margin: 12px 0;">👆 截图保存，发朋友圈/小红书</p>
-            
-            <button class="share-btn" onclick="downloadScreenshot()" style="margin-top: 10px; background: #2196F3;">保存结果到相册</button>
             
             <!-- 引流区 -->
             <div class="cta-section">
@@ -779,11 +764,6 @@
             const result = getPersonalityResult(code);
             
             document.getElementById('avatar-container').innerHTML = getAvatarSVG(result.name);
-            
-            document.getElementById('share-card-avatar').innerHTML = getAvatarSVG(result.name);
-            document.getElementById('share-card-name').innerText = result.name;
-            document.getElementById('share-card-catchphrase').innerText = '"' + result.catchphrase + '"';
-            document.getElementById('share-card-directions').innerHTML = document.getElementById('directions').innerHTML;
             
             document.getElementById('name').innerText = result.name;
             document.getElementById('english').innerText = result.english;
@@ -1202,28 +1182,32 @@
             return svg;
         }
         
-        function copyShare() {
-            var text = document.getElementById('share-text').value;
-            if (!text || text.trim() === '') {
-                alert('分享文案为空，请刷新页面重新测试');
-                return;
-            }
-            var textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed';
-            textarea.style.left = '-9999px';
-            document.body.appendChild(textarea);
-            textarea.focus();
-            textarea.select();
+        function shareToFriend() {
+            var name = document.getElementById('name').innerText;
+            var text = '我测了我的副业人格，是【' + name + '】！' + '\n你的副业人格是什么？来测测 👇\nhttps://foolish2022.github.io/money-type/';
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
             try {
                 document.execCommand('copy');
-                alert('文案已复制！去朋友圈/小红书粘贴吧~');
-            } catch (err) {
-                alert('复制失败，请长按上方文案手动复制');
+                var btn = document.getElementById('share-btn');
+                btn.innerText = '✓ 已复制，去粘贴吧';
+                btn.style.background = '#4CAF50';
+                btn.style.color = 'white';
+                setTimeout(function() {
+                    btn.innerText = '复制分享文案';
+                    btn.style.background = 'white';
+                    btn.style.color = '#667eea';
+                }, 3000);
+            } catch (e) {
+                alert('复制失败，请手动复制以下文案：\n' + text);
             }
-            document.body.removeChild(textarea);
+            document.body.removeChild(ta);
         }
-        
+
         function downloadScreenshot() {
             if (typeof html2canvas === 'undefined') {
                 alert('正在加载截图组件，请稍后再试');
