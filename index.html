@@ -268,43 +268,85 @@
             margin-bottom: 20px;
         }
         
-        .share-section {
-            background: #e8f5e9;
-            border-radius: 12px;
-            padding: 20px;
+        .share-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 16px;
+            padding: 24px;
             margin: 24px 0;
+            color: white;
+            text-align: left;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        
+        .share-card-top {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .share-card-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+        
+        .share-card-info {
+            flex: 1;
+        }
+        
+        .share-card-name {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        
+        .share-card-catchphrase {
+            font-size: 13px;
+            opacity: 0.8;
+            font-style: italic;
+        }
+        
+        .share-card-body {
+            margin-bottom: 20px;
+        }
+        
+        .share-card-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.6;
+            margin-bottom: 8px;
+        }
+        
+        .share-card-directions {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        .share-card-footer {
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.1);
             text-align: center;
         }
         
-        .share-btn {
-            display: inline-block;
-            padding: 12px 32px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 12px;
+        .share-card-qr {
+            font-size: 13px;
+            opacity: 0.7;
+            margin-bottom: 4px;
         }
         
-        .share-text {
+        .share-card-link {
             font-size: 14px;
-            color: #666;
-            margin-top: 12px;
-            padding: 12px;
-            background: white;
-            border-radius: 8px;
-            text-align: left;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            min-height: 60px;
-            width: 100%;
-            border: none;
-            resize: none;
-            outline: none;
-            font-family: inherit;
-            box-sizing: border-box;
+            font-weight: bold;
+            letter-spacing: 0.5px;
         }
         
         /* 引流区 */
@@ -607,14 +649,27 @@
                 <ul class="action-list" id="action-list"></ul>
             </div>
             
-            <!-- 分享区 -->
-            <div class="share-section">
-                <h3>📱 保存结果到相册</h3>
-                <p>截图发朋友圈/小红书，找同类一起搞钱</p>
-                <textarea id="share-text" class="share-text" readonly></textarea>
-                <button class="share-btn" onclick="copyShare()">邀请好友也来测测</button>
-                <button class="share-btn" onclick="downloadScreenshot()" style="margin-top: 10px; background: #2196F3;">保存结果到相册</button>
+            <!-- 分享卡片 -->
+            <div class="share-card" id="share-card">
+                <div class="share-card-top">
+                    <div class="share-card-avatar" id="share-card-avatar"></div>
+                    <div class="share-card-info">
+                        <div class="share-card-name" id="share-card-name">野生猎人</div>
+                        <div class="share-card-catchphrase" id="share-card-catchphrase">"先发了再说，流量来了"</div>
+                    </div>
+                </div>
+                <div class="share-card-body">
+                    <div class="share-card-label">适合我的3个副业方向</div>
+                    <div class="share-card-directions" id="share-card-directions">短视频带货 / 直播切片 / 热点内容</div>
+                </div>
+                <div class="share-card-footer">
+                    <div class="share-card-qr">测测你的 👇</div>
+                    <div class="share-card-link">foolish2022.github.io/money-type</div>
+                </div>
             </div>
+            <p style="text-align: center; color: #999; font-size: 13px; margin: 12px 0;">👆 截图保存，发朋友圈/小红书</p>
+            
+            <button class="share-btn" onclick="downloadScreenshot()" style="margin-top: 10px; background: #2196F3;">保存结果到相册</button>
             
             <!-- 引流区 -->
             <div class="cta-section">
@@ -724,6 +779,11 @@
             const result = getPersonalityResult(code);
             
             document.getElementById('avatar-container').innerHTML = getAvatarSVG(result.name);
+            
+            document.getElementById('share-card-avatar').innerHTML = getAvatarSVG(result.name);
+            document.getElementById('share-card-name').innerText = result.name;
+            document.getElementById('share-card-catchphrase').innerText = '"' + result.catchphrase + '"';
+            document.getElementById('share-card-directions').innerHTML = document.getElementById('directions').innerHTML;
             
             document.getElementById('name').innerText = result.name;
             document.getElementById('english').innerText = result.english;
